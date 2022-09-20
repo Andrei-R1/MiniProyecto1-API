@@ -9,3 +9,43 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Escuela {
+  id    Int    @id @default(autoincrement())
+  nombre String
+  periodo Int
+  profesores Profesor[]
+  estudiantes Estudiante[]
+  encuestas Encuesta[]
+  evaluaciones Evaluacion[]
+}
+
+model Profesor {
+  id       Int  @id @default(autoincrement())
+  nombre String
+  noCarne String
+  escuela   Escuela @relation(fields: [escuelaId], references: [id])
+  escuelaId Int
+}
+model Estudiante {
+  id       Int  @id @default(autoincrement())
+  nombre String
+  noCarne String
+  escuela   Escuela @relation(fields: [escuelaId], references: [id])
+  escuelaId Int
+}
+model Encuesta {
+  id       Int  @id @default(autoincrement())
+  nombre String
+  datos String[]
+  escuela   Escuela @relation(fields: [escuelaId], references: [id])
+  escuelaId Int
+}
+model Evaluacion {
+  id       Int  @id @default(autoincrement())
+  nombre String
+  datos String[]
+  escuela   Escuela @relation(fields: [escuelaId], references: [id])
+  escuelaId Int
+}
+
